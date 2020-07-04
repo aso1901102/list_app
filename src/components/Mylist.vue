@@ -25,22 +25,14 @@ export default {
             arr: [],
         };
     },
-
-    created: function(){
-        var items = localStorage.getItem('log');
-        var logs = JSON.parse(items);
-        if(logs != null){
-            this.arr = logs;
-        }
-    },
      
     methods: {
         doAction: function(){
             //input text add array
-            this.arr.push(this.input);
+            this.arr = this.input;
 
             //Call result-event on $emit
-            this.$emit('result-event',arr);
+            this.$emit('result-event',this.arr);
         }
     }
 
