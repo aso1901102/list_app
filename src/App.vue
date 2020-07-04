@@ -3,7 +3,7 @@
     <Mylist v-bind:title="message" v-on:result-event="appAction"/>
     <hr>
     <div>
-      <table v-html="log"></table>
+      <table v-html="log" align="center"></table>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
 
   computed:{
     log:function(){
-      var table = '<tr><th class = "head">my list</th></tr>';
+      var table = '<tr><th class = "head" align="center">my list</th></tr>';
       for(var i in this.result){
         table += '<tr><td>' + this.result[i] + '</td></th>';
       }
@@ -45,9 +45,9 @@ export default {
     appAction:function(arr){
       this.result.unshift(arr);
       if(this.result.length > 5){
-        this.result.splice(0,(this.result.length - 5));
+        this.result.pop();
       }
-      
+
       var log = JSON.stringify(this.result);
       localStorage.getItem('log',log);
     }
@@ -68,19 +68,16 @@ export default {
 tr td{
   padding:5px;
   border:1px solid gray;
-  text-align: center;
 }
 
 tr th{
   padding:5px;
   border:1px solid gray; 
-  text-align: center;
 }
 
 tr th.head{
   background-color:black;
   color:white;
-  text-align: center;
 }
 
 </style>
