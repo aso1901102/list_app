@@ -1,17 +1,55 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Mylist v-bind:title="message" v-on:result-event="appAction"/>
+    <hr>
+    <div>
+      <table v-html="log"></table>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Mylist from './components/Mylist.vue'
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
-    HelloWorld
+    Mylist
+  },
+  data: function(){
+    return{
+      message:"メモを入力してください",
+      result : [],
+    };
+  },
+
+  computed:{
+    log:function(){
+      var table = '<tr><th class = "head">my list</th></tr>';
+      for(var i in this.result){
+        table += '<tr><td>' + this.result[i] + '</td></th>';
+      }
+      return table;
+    }
+  },
+
+  created:function(){
+    var items = localStorage.getItem('log');
+    var logs = JSON.parse(items);
+    if(logs != null){
+      this.result = logs;
+    }
+  },
+
+  methods:{
+    appAction:function(exp,res){
+      this.result.unshift([exp,res]);
+      if(this.result.length > 5){
+        this.result.pop();
+      }
+      var log = JSON.stringify(this.result);
+      localStorage.getItem8('log',log);
+    }
   }
 }
 </script>
@@ -25,4 +63,20 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+tr td{
+  padding:5px;
+  border:1px solid gray;
+}
+
+tr th{
+  padding:5px;
+  border:1px solid gray; 
+}
+
+tr th.head{
+  background-color:black;
+  color:white;
+}
+
 </style>
