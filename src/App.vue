@@ -42,13 +42,14 @@ export default {
   },
 
   methods:{
-    appAction:function(exp,res){
-      this.result.unshift([exp,res]);
+    appAction:function(arr){
+      this.result.unshift(arr);
       if(this.result.length > 5){
-        this.result.pop();
+        this.result.splice(0,(this.result.length - 5));
       }
+      
       var log = JSON.stringify(this.result);
-      localStorage.getItem8('log',log);
+      localStorage.getItem('log',log);
     }
   }
 }
@@ -67,16 +68,19 @@ export default {
 tr td{
   padding:5px;
   border:1px solid gray;
+  text-align: center;
 }
 
 tr th{
   padding:5px;
   border:1px solid gray; 
+  text-align: center;
 }
 
 tr th.head{
   background-color:black;
   color:white;
+  text-align: center;
 }
 
 </style>

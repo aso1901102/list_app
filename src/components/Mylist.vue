@@ -3,7 +3,7 @@
         <h1>{{ title }}</h1>
         <div>
             <div>
-                <input type = "text" v-model = "input">
+                <input type = "text" v-model = "input" placeholder="Input here">
             </div>
                 <button v-on:click = "doAction">
                     クリック
@@ -22,24 +22,22 @@ export default {
     data:function(){
         return {
             input: 'Input Here',
+            arr: [],
         };
     },
 
+    created: function(){
+        var items = localStorage.getItem('log');
+        var logs = JSON.parse(items);
+        if(logs != null){
+            this.arr = logs;
+        }
+    },
+     
     methods: {
         doAction: function(){
             //input text add array
-            var arr = this.input.push();
-
-            while(arr[5] != ''){
-                var last = arr.pop();
-                //if arr[5] not empty,repeat move each item to front in arr
-                for(var n in arr){
-                    arr[n] = arr[n + 1];
-                }
-            }
-            //Last item in arr of array,insert to last 
-            arr = last.push()
-
+            this.arr.push(this.input);
 
             //Call result-event on $emit
             this.$emit('result-event',arr);
